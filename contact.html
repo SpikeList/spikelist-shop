@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpikeList Store — Contact Us</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #1a1d26;
+    --accent: #00e5ff;
+    --text: #e8eaf0;
+    --muted: #7a7f94;
+    --border: rgba(255,255,255,0.07);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; }
+
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px 60px;
+    background: rgba(10,12,16,0.9); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; color:#fff; text-decoration:none; }
+  .logo span { color: var(--accent); }
+  nav ul { list-style:none; display:flex; gap:36px; }
+  nav ul li a { color:var(--muted); text-decoration:none; font-size:0.9rem; font-weight:500; transition:color 0.2s; }
+  nav ul li a:hover, nav ul li a.active { color: var(--accent); }
+  .nav-cta { background: var(--accent); color: #000; padding:9px 22px; border-radius:6px; font-weight:600; font-size:0.85rem; text-decoration:none; }
+
+  .page-hero {
+    margin-top:72px; padding:80px 60px 60px;
+    position:relative; background: var(--surface); border-bottom:1px solid var(--border);
+  }
+  .page-hero-bg {
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse 50% 80% at 20% 50%, rgba(0,229,255,0.06) 0%, transparent 60%);
+  }
+  .page-hero-content { position:relative; max-width:560px; }
+  .eyebrow { font-size:0.75rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+  .page-hero h1 { font-family:'Syne',sans-serif; font-size:3rem; font-weight:800; letter-spacing:-1px; margin-bottom:18px; line-height:1.1; }
+  .page-hero p { color:var(--muted); font-size:1rem; line-height:1.75; }
+
+  /* CONTACT LAYOUT */
+  .contact-section { display:grid; grid-template-columns:1fr 1.4fr; gap:60px; padding:80px 60px; align-items:start; }
+
+  /* INFO CARDS */
+  .info-col { display:flex; flex-direction:column; gap:16px; }
+  .info-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px 28px; display:flex; gap:18px; align-items:flex-start; transition:border-color 0.2s; }
+  .info-card:hover { border-color:rgba(0,229,255,0.25); }
+  .info-icon { font-size:1.5rem; flex-shrink:0; margin-top:2px; }
+  .info-card h4 { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; margin-bottom:6px; }
+  .info-card p { color:var(--muted); font-size:0.85rem; line-height:1.65; }
+  .info-card a { color:var(--accent); text-decoration:none; font-weight:500; }
+  .info-card a:hover { text-decoration:underline; }
+
+  .hours-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px; }
+  .hours-card h4 { font-family:'Syne',sans-serif; font-weight:700; margin-bottom:16px; }
+  .hours-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.85rem; }
+  .hours-row:last-child { border-bottom:none; }
+  .hours-row .day { color:var(--muted); }
+  .hours-row .time { font-weight:500; }
+  .hours-row .closed { color:#ff4f5e; }
+
+  /* FORM */
+  .form-col { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:40px; }
+  .form-title { font-family:'Syne',sans-serif; font-size:1.4rem; font-weight:800; margin-bottom:8px; }
+  .form-subtitle { color:var(--muted); font-size:0.88rem; margin-bottom:32px; line-height:1.6; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .field { margin-bottom:20px; }
+  .field label { display:block; font-size:0.82rem; font-weight:600; color:var(--muted); margin-bottom:8px; letter-spacing:0.03em; }
+  .field input, .field select, .field textarea {
+    width:100%; background:var(--bg); border:1px solid var(--border);
+    color:var(--text); border-radius:8px; padding:12px 16px;
+    font-family:'DM Sans',sans-serif; font-size:0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline:none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,229,255,0.08);
+  }
+  .field textarea { resize:vertical; min-height:120px; }
+  .field select option { background:var(--surface); }
+  .submit-btn {
+    width:100%; background:var(--accent); color:#000;
+    border:none; padding:14px; border-radius:8px;
+    font-family:'Syne',sans-serif; font-size:1rem; font-weight:700;
+    cursor:pointer; transition:opacity 0.2s, transform 0.2s;
+    margin-top:4px;
+  }
+  .submit-btn:hover { opacity:0.88; transform:translateY(-1px); }
+  .success-msg { display:none; text-align:center; padding:24px; background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.2); border-radius:10px; margin-top:16px; }
+  .success-msg .check { font-size:2rem; margin-bottom:10px; }
+  .success-msg h4 { font-family:'Syne',sans-serif; font-weight:700; margin-bottom:6px; }
+  .success-msg p { color:var(--muted); font-size:0.88rem; }
+
+  /* MAP placeholder */
+  .map-section { padding:0 60px 80px; }
+  .map-box {
+    background:var(--surface); border:1px solid var(--border); border-radius:16px;
+    height:220px; display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:10px; color:var(--muted);
+  }
+  .map-box .map-icon { font-size:2.5rem; }
+  .map-box p { font-size:0.9rem; }
+  .map-box a { color:var(--accent); text-decoration:none; font-size:0.85rem; font-weight:600; }
+
+  /* FOOTER */
+  footer { padding:60px; background:var(--surface); border-top:1px solid var(--border); }
+  .footer-inner { display:flex; justify-content:space-between; align-items:center; }
+  .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; }
+  .footer-logo span { color:var(--accent); }
+  .footer-links { display:flex; gap:28px; }
+  .footer-links a { color:var(--muted); text-decoration:none; font-size:0.88rem; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--accent); }
+  .footer-copy { color:var(--muted); font-size:0.82rem; margin-top:32px; text-align:center; border-top:1px solid var(--border); padding-top:28px; }
+
+  @media(max-width:900px) {
+    nav { padding:16px 24px; }
+    .page-hero { padding:60px 24px 40px; }
+    .page-hero h1 { font-size:2rem; }
+    .contact-section { grid-template-columns:1fr; padding:40px 24px; gap:32px; }
+    .form-row { grid-template-columns:1fr; }
+    .form-col { padding:28px 20px; }
+    .map-section { padding:0 24px 60px; }
+    footer { padding:40px 24px; }
+    .footer-inner { flex-direction:column; gap:24px; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Spike<span>List</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="products.html" class="nav-cta">Shop Now</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <div class="eyebrow">Get In Touch</div>
+    <h1>We'd Love to Hear From You</h1>
+    <p>Whether you need a bulk quote, product advice, or technical support — our team is ready to help you find exactly the right IT solution.</p>
+  </div>
+</div>
+
+
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Spike<span>List</span> Store</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 SpikeList Store · store.spikelist.com · All rights reserved.</div>
+</footer>
+
+<script>
+  function submitForm() {
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value.trim();
+    if (!fname || !email || !subject || !message) {
+      alert('Please fill in all required fields before submitting.');
+      return;
+    }
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  }
+</script>
+</body>
+</html>
